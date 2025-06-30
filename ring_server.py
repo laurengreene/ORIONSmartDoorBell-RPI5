@@ -188,7 +188,7 @@ def startCamera():
     global manual_override          # This flag prevents the camera from turning on again too soon in motion mode
     if not camera_on:               # Only turn on the camera if it's currently off
         cameraControl("on")         # Call the function to turn on the camera
-        client.publish(REMOTE_DEV_CAMERA_ONOFF_CONTROL_TOPIC, "on")    # Send a message over MQTT so the app knows the camera is now on
+        client.publish(REMOTE_DEV_CAMERA_ONOFF_CONTROL_TOPIC, "on", retain=True)    # Send a message over MQTT so the app knows the camera is now on
         if args.mode == "motion":    # If we're using motion detection mode...
             manual_override = False  # Allow motion to trigger the camera again in the future
 
