@@ -89,6 +89,20 @@ client.connect({
         });
         is_connected = true;       // Mark that we are successfully connected
         disableControls(false);    // Re-enable the buttons in the app
+        // Auto-recover in case the camera was already running but message was missed
+        setTimeout(() => {
+            console.log("⏳ Checking if MJPEG stream is already available...");
+            fetch("/stream.mjpg", { method: "HEAD" })
+                .then(res => {
+                    if (res.ok) {
+                        console.log("📸 MJPEG stream already available. Requesting camera ON.");
+                        SendCommand(REMOTE_APP_CAMERA_ONOFF_CONTROL_TOPIC, "on");
+                    }
+                })
+                .catch(() => {
+                    console.warn("⚠️ MJPEG stream not available at initial check.");
+                });
+        }, 1500);
     },
      // If the connection fails...
     onFailure: (err) => {
