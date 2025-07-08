@@ -13,7 +13,7 @@ CONFIG="
 listener 1883
 allow_anonymous true
 
-listener 9001
+listener 9000
 protocol websockets
 allow_anonymous true
 "
