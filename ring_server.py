@@ -97,6 +97,16 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
         except Exception as e:
             # If something goes wrong, log the error for debugging
             logging.error(f"Handler error: {e}")
+    
+    def do_HEAD(self):
+        # If the browser is asking for the camera video stream...
+        if self.path.startswith('/stream.mjpg'):
+            self.send_response(200)# Say "Yes, you can access it" (200 OK)
+            self.send_header('Content-Type', 'multipart/x-mixed-replace; boundary=FRAME') # Let the browser know what type of content it will get
+            self.send_header('Cache-Control', 'no-cache, private') # Tell the browser not to cache (save) the video stream
+            self.end_headers()# Finish the response — we don’t send the video yet,just the headers so the browser knows everything is okay 
+        else:
+            self.send_error(404)# If the browser is asking for something else we don’t recognize,say “Not found” (404 error)
 
     def _send_file_response(self, content, content_type):
         self.send_response(200)                            # Send a "200 OK" response to let the browser know the request was successful
