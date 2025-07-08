@@ -10,8 +10,7 @@ fi
 # Define secure listener config block
 SECURE_CONFIG="
 # Smart Doorbell MQTT Secure Configuration
-listener 9002
-protocol websockets
+listener 8883
 cafile /etc/mosquitto/certs/orion_ca.crt
 keyfile /etc/mosquitto/certs/ring_server.key
 certfile /etc/mosquitto/certs/ring_server.crt
