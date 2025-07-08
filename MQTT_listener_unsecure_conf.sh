@@ -12,6 +12,10 @@ CONFIG="
 # Smart Doorbell MQTT Configuration
 listener 1883
 allow_anonymous true
+
+listener 9001
+protocol websockets
+allow_anonymous true
 "
 
 # Check if configuration already exists
