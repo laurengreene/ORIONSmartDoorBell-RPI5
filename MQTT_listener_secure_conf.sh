@@ -18,7 +18,7 @@ keyfile /etc/mosquitto/certs/ring_server.key
 certfile /etc/mosquitto/certs/ring_server.crt
 
 # WebSocket over TLS (WSS)
-listener 9002
+listener 9001
 protocol websockets
 cafile /etc/mosquitto/certs/orion_ca.crt
 keyfile /etc/mosquitto/certs/ring_server.key
