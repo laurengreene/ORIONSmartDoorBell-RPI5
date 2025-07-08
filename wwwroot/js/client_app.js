@@ -32,7 +32,7 @@ const MAX_RETRIES = 3;       // The maximum number of times to retry loading the
 // === CONNECTION SECURITY CONFIG ===
 // These settings help the app know how to securely connect to the MQTT server
 const isSecure = location.protocol === "https:";    // This checks if the webpage is loaded using HTTPS (secure connection)
-const BROKER_PORT = isSecure ? 9002 : 9001;         // If using HTTPS, use port 9002 (secure MQTT); otherwise use port 9001 (insecure MQTT)
+const BROKER_PORT = isSecure ? 9001 : 9000;         // If using HTTPS, use port 9002 (secure MQTT); otherwise use port 9001 (insecure MQTT)
 const brokerHost = "PI's IP";                       // Replace with your Pi's IP. This should be the IP address of your Raspberry Pi (example: "192.168.1.100") 
 const mqttPath = "/mqtt";                           // This is the path used by the browser to connect to the MQTT server over WebSocket
 
