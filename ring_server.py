@@ -90,6 +90,10 @@ class StreamingHandler(server.BaseHTTPRequestHandler):
             elif self.path.startswith('/stream.mjpg'):
                 self._handle_stream()     # Start sending camera images one after another
 
+            elif self.path == '/favicon.ico':
+                content = self.ReadClientApp('./wwwroot/favicon.ico', binary=True)
+                self._send_file_response(content, 'image/x-icon')
+
             # === If the path doesn’t match any of the above, show a 404 error ===
             else:
                 self.send_error(404) # Page not found
