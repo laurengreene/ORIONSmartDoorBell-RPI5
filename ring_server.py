@@ -460,7 +460,7 @@ def on_message(client, userdata, msg):
         change_volume(direction)
 
 def on_connect(client, userdata, flags, rc, properties=None):
-    print("✅ MQTT connected:", rc)        # Confirm that the system connected to the MQTT server
+    print(f"✅ MQTT connected on port {MQTT_PORT} (code: {rc})")  # Confirm that the system connected to the MQTT server
     
      # Subscribe to each topic so the Raspberry Pi can listen for specific messages
     for t in [REMOTE_APP_CAMERA_ONOFF_CONTROL_TOPIC,     # For turning the camera on/off
@@ -506,7 +506,17 @@ if __name__ == '__main__':
     client.on_message = on_message               # Define what to do when messages arrive
     client.on_connect = on_connect               # Define what to do when connected
     client.on_disconnect = on_disconnect         # Define what to do when disconnected
-    client.connect("127.0.0.1", 1883, 60)        # Connect to local MQTT broker
+    MQTT_PORT = 8883 if args.secure == "on" else 1883
+    if args.secure == "on":
+        client.tls_set(
+            ca_certs="/etc/mosquitto/certs/orion_ca.crt",  # Your CA certificate
+            certfile=None,
+            keyfile=None,
+            cert_reqs=ssl.CERT_NONE,       # Allow self-signed cert
+            tls_version=ssl.PROTOCOL_TLS,  # Use TLS
+            ciphers=None
+        )
+    client.connect("127.0.0.1", MQTT_PORT, 60)        # Connect to local MQTT broker       
     client.loop_start()                          # Start MQTT client in the background
 
     # === 5. Prepare Audio Streaming ===
