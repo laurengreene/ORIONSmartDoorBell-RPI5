@@ -9,6 +9,9 @@ sudo apt update && sudo apt upgrade -y
 echo "Installing required packages..."
 sudo apt install -y \
     python3 \
+    python3-dev \
+    python3-dotenv \
+    python3-numpy \
     python3-pip \
     python3-venv \
     python3-pygame \
@@ -17,9 +20,10 @@ sudo apt install -y \
     python3-picamera2 \
     python3-gpiozero \
     python3-paho-mqtt \
-    libatlas-base-dev \
+    libopenblas-dev \
     libportaudio2 \
-    portaudio19-dev \
+    portaudio19-dev  \
+    build-essential \
     pulseaudio \
     sox \
     alsa-utils \
@@ -28,7 +32,7 @@ sudo apt install -y \
     ffmpeg \
     curl \
     git \
-    raspi-config \
+    raspi-config 
 
 # Enable VNC
 echo "Enabling VNC..."
@@ -41,6 +45,10 @@ sudo raspi-config nonint do_i2c 0
 # Enable screen blanking (0 = enable, 1 = disable)
 echo "Enabling screen blanking..."
 sudo raspi-config nonint do_blanking 0
+
+echo "Enabling and starting Mosquitto..."
+sudo systemctl enable mosquitto
+sudo systemctl start mosquitto
 
 #Set Bluetooth speaker as default audio output
 echo "Setting Bluetooth speaker as default audio output..."
@@ -77,5 +85,6 @@ else
     echo "Failed to set Bluetooth speaker volume"
     exit 1
 fi
+
 
 echo "Setup complete."
